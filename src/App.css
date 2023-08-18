@@ -1,6 +1,7 @@
-body{
+body {
   background-color: whitesmoke;
 }
+
 .pagination {
   display: flex;
   justify-content: center;

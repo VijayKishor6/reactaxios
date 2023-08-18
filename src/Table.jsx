@@ -5,7 +5,7 @@ import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
 import './App.css';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { deleteUserData} from "./Apicall";
+import { deleteUserData } from "./Apicall";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -124,14 +124,14 @@ function UserTable() {
                         <AiFillDelete />
                       </Button>
                       <Button
-                      onClick={() => handleShowClick(user)}
+                        onClick={() => handleShowClick(user)}
                         style={{
                           backgroundColor: "transparent",
                           borderColor: "transparent",
                           color: "black",
                         }}
                       >
-                      <AiFillEye/>
+                        <AiFillEye />
                       </Button>
                     </td>
                   </tr>
@@ -146,7 +146,7 @@ function UserTable() {
             )}
           </tbody>
         </Table>
-       
+
 
       </Container>
 

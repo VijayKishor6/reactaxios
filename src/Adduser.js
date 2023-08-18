@@ -83,54 +83,54 @@ const Adduser = () => {
   return (
     <Container className='addcontainer'>
       <Card className='back shadow'>
-      <div className='back'><h2>Add Users</h2></div>
-      <div className='formin'>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-            <Form.Label column sm="2">
-              Name
-            </Form.Label>
-            <Col sm="10">
-              <Form.Control type="text" placeholder="Name" id="name" name="name" value={formData.name} onChange={handleChange} />
-              <Form.Text className="text-danger">{validationErrors.name}</Form.Text>
+        <div className='back'><h2>Add Users</h2></div>
+        <div className='formin'>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+              <Form.Label column sm="2">
+                Name
+              </Form.Label>
+              <Col sm="10">
+                <Form.Control type="text" placeholder="Name" id="name" name="name" value={formData.name} onChange={handleChange} />
+                <Form.Text className="text-danger">{validationErrors.name}</Form.Text>
 
-            </Col>
-          </Form.Group>
+              </Col>
+            </Form.Group>
 
-          <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-            <Form.Label column sm="2">
-              Email
-            </Form.Label>
-            <Col sm="10">
-              <Form.Control type="text" placeholder="Email" id="email" name="email" value={formData.email} onChange={handleChange} />
-              <Form.Text className="text-danger">{validationErrors.email}</Form.Text>
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-            <Form.Label column sm="2">
-            Conatct
-            </Form.Label>
-            <Col sm="10">
-              <Form.Control type="text" placeholder="Phone Number" id="phone_number" name="phone_number" value={formData.phone_number} onChange={handleChange} />
-              <Form.Text className="text-danger">{validationErrors.phone_number}</Form.Text>
+            <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+              <Form.Label column sm="2">
+                Email
+              </Form.Label>
+              <Col sm="10">
+                <Form.Control type="text" placeholder="Email" id="email" name="email" value={formData.email} onChange={handleChange} />
+                <Form.Text className="text-danger">{validationErrors.email}</Form.Text>
+              </Col>
+            </Form.Group>
+            <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+              <Form.Label column sm="2">
+                Conatct
+              </Form.Label>
+              <Col sm="10">
+                <Form.Control type="text" placeholder="Phone Number" id="phone_number" name="phone_number" value={formData.phone_number} onChange={handleChange} />
+                <Form.Text className="text-danger">{validationErrors.phone_number}</Form.Text>
 
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-            <Form.Label column sm="2">
-              Message
-            </Form.Label>
-            <Col sm="10">
-              <Form.Control placeholder="Message" as="textarea" rows={3} id="message" name="message" value={formData.message} onChange={handleChange} />
-              <Form.Text className="text-danger">{validationErrors.message}</Form.Text>
+              </Col>
+            </Form.Group>
+            <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+              <Form.Label column sm="2">
+                Message
+              </Form.Label>
+              <Col sm="10">
+                <Form.Control placeholder="Message" as="textarea" rows={3} id="message" name="message" value={formData.message} onChange={handleChange} />
+                <Form.Text className="text-danger">{validationErrors.message}</Form.Text>
 
-            </Col>
-          </Form.Group>
-          <div className='buttonalign'>
-            <Button type="submit" >Submit</Button>
-          </div>
-        </Form>
-      </div>
+              </Col>
+            </Form.Group>
+            <div className='buttonalign'>
+              <Button type="submit" >Submit</Button>
+            </div>
+          </Form>
+        </div>
       </Card>
 
     </Container>
