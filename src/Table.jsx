@@ -8,23 +8,21 @@ import { useNavigate } from "react-router-dom";
 import { deleteUserData } from "./Apicall";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import ReactPaginate from 'react-paginate';
 
-function UserTable() {
+const  UserTable = () => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
-
-  const deleteData = async (id) => {
-    await deleteUserData(id);
-    toast("Thanks For deleting");
-    await fetchUserData();
-  }
   const [data, setData] = useState([]);
+  const [pageNumber, setPageNumber] = useState(0);
+  const usersPerPage = 5;
   console.log(data);
-  const fetchUserData = async () => {
+
+  const fetchUserData = async (page) => {
     try {
       const response = await axios.get(
-        "https://fts-backend.onrender.com/admin/testing/getallusers?offset=1&limit=10"
+        `https://fts-backend.onrender.com/admin/testing/getallusers?offset=${page + 1}&limit=${usersPerPage}`
       );
       return response.data;
 
@@ -34,6 +32,11 @@ function UserTable() {
     }
   };
 
+  // page change happens here
+  const handlePageChange = ({ selected }) => {
+    setPageNumber(selected);
+  };
+
   const handleEditClick = (user) => {
     const confirmEdit = window.confirm("Do you want to edit?");
     if (confirmEdit) {
@@ -41,12 +44,21 @@ function UserTable() {
     }
   };
 
-  const handleDeleteClick = (id) => {
+  const handleDeleteClick = async (id) => {
     const confirmDelete = window.confirm("Do you want to delete?");
     if (confirmDelete) {
-      deleteData(id);
+      try {
+        await deleteUserData(id);
+        toast("Thanks For deleting");
+        const updatedData = await fetchUserData();
+        setData(updatedData);
+      } catch (error) {
+        console.log(error);
+      }
+      
     }
   };
+
   const handleShowClick = (user) => {
     setSelectedUser(user);
     setShowModal(true);
@@ -56,28 +68,28 @@ function UserTable() {
     setSelectedUser(null);
     setShowModal(false);
   };
+  
   useEffect(() => {
-    const ee = async () => {
+    const fetchData = async () => {
       try {
-        const ees = await fetchUserData()
-        console.log(ees, "tets");
-        setData(ees);
+        const data2 = await fetchUserData(pageNumber);
+        setData(data2);
       } catch (e) {
         console.log(e);
       }
+    };
 
-    }
-    ee()
-  }, [data]);
+    fetchData();
+  }, [pageNumber]);
 
   return (
     <>
       <Container>
         <div className="text-end">
-          <Button className="bg-danger border-0" onClick={() => navigate("/adduser")} >Add</Button>
+          <Button className="btn btn-danger" onClick={() => navigate("/adduser")} >Add User</Button>
         </div>
-        <h3 className="text-white">Fetching the Data's</h3>
-        <Table striped bordered hover className="shadow">
+        <h3 className="text-white">Fetching the Users</h3>
+        <Table striped bordered hover className="shadow table-responsive">
           <thead>
             <tr>
               <th className="text-center">S.No</th>
@@ -170,6 +182,17 @@ function UserTable() {
           </Button>
         </Modal.Footer>
       </Modal>
+      <ReactPaginate
+        previousLabel={"Previous"}
+        nextLabel={"Next"}
+        pageCount={Math.ceil(data?.response?.paginationOutput?.totalCount / usersPerPage)}
+        onPageChange={handlePageChange}
+        containerClassName={"pagination"}
+        previousLinkClassName={"pagination__link"}
+        nextLinkClassName={"pagination__link"}
+        disabledClassName={"pagination__link--disabled"}
+        activeClassName={"pagination__link--active"}
+      />
 
 
       <ToastContainer />

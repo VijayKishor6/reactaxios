@@ -28,3 +28,29 @@ body {
   top: 1rem;
   right: 1rem;
 }
+
+/* Pagination styles */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination__link {
+  display: inline-block;
+  padding: 5px 10px;
+  margin: 0 5px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  color: white; /* Set the text color to white */
+}
+
+.pagination__link--disabled {
+  color: #ccc; /* Set the disabled text color */
+  cursor: not-allowed;
+}
+
+.pagination__link--active {
+  color: greenyellow; /* Set the text color of the active page number */
+}

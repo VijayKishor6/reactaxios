@@ -64,7 +64,7 @@ const Adduser = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+  
     if (validateForm()) {
       if (userData.id) {
         await editUserData(userData.id, formData);
@@ -74,16 +74,20 @@ const Adduser = () => {
         toast('Added Data Successfully');
       }
       navigate('/', { state: formData });
-    } else {
-      // toast('Please fix the validation errors');
-    }
+    } 
   };
 
+  const handleCancel = () => {
+    const confirmCancel = window.confirm('Are you sure you want to exit?');
 
+    if (confirmCancel) {
+      navigate('/');
+    }
+  };
   return (
     <Container className='addcontainer'>
       <Card className='back shadow'>
-        <div className='back'><h2>Add Users</h2></div>
+        <div className='back'><h2>Add User</h2></div>
         <div className='formin'>
           <Form onSubmit={handleSubmit}>
             <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
@@ -126,8 +130,9 @@ const Adduser = () => {
 
               </Col>
             </Form.Group>
-            <div className='buttonalign'>
-              <Button type="submit" >Submit</Button>
+            <div className='buttonalign gap-2'>
+              <Button type="submit"  className='btn-success'>Submit</Button>
+              <Button className='btn-danger' onClick={handleCancel}>Cancel</Button>
             </div>
           </Form>
         </div>
