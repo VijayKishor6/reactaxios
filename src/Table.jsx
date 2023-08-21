@@ -189,11 +189,23 @@ const UserTable = () => {
         nextLabel={"Next"}
         pageCount={data?.response?.paginationOutput?.totalPages || 0}
         onPageChange={handlePageChange}
-        containerClassName={"pagination"}
-        previousLinkClassName={"pagination__link"}
-        nextLinkClassName={"pagination__link"}
-        disabledClassName={"pagination__link--disabled"}
-        activeClassName={"pagination__link--active"}
+        // containerClassName={"pagination"}
+        // previousLinkClassName={"pagination__link"}
+        // nextLinkClassName={"pagination__link"}
+        // disabledClassName={"pagination__link--disabled"}
+        // activeClassName={"pagination__link--active"}
+        // pageClassName="page-item"
+                  pageLinkClassName="page-link"
+                  previousClassName="page-item"
+                  
+                  
+                  previousLinkClassName="page-link"
+                  nextClassName="page-item"
+                  nextLinkClassName="page-link"
+                  breakClassName="page-item"
+                  breakLinkClassName="page-link"
+                  containerClassName="pagination"
+                  activeClassName="active"
       />
 
 
