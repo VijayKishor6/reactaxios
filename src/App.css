@@ -29,8 +29,7 @@ body {
   right: 1rem;
 }
 
-/* Pagination styles */
-.pagination {
+Pagination styles .pagination {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -43,14 +42,14 @@ body {
   margin: 0 5px;
   border: 1px solid #ccc;
   cursor: pointer;
-  color: white; /* Set the text color to white */
+  color: white;
 }
 
 .pagination__link--disabled {
-  color: #ccc; /* Set the disabled text color */
+  color: #ccc;
   cursor: not-allowed;
 }
 
 .pagination__link--active {
-  color: greenyellow; /* Set the text color of the active page number */
+  color: #e6470d;
 }

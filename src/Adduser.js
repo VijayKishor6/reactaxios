@@ -11,12 +11,17 @@ const Adduser = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const userData = location.state || {};
+
   const [formData, setFormData] = useState({
     name: userData.name || '',
     email: userData.email || '',
     phone_number: userData.phone_number || '',
     message: userData.message || '',
   });
+
+  const isEditing = userData.id !== undefined;
+
+
   const [validationErrors, setValidationErrors] = useState({
     name: '',
     email: '',
@@ -64,9 +69,9 @@ const Adduser = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
+
     if (validateForm()) {
-      if (userData.id) {
+      if (isEditing) {
         await editUserData(userData.id, formData);
         toast('Updated Data Successfully');
       } else {
@@ -74,20 +79,21 @@ const Adduser = () => {
         toast('Added Data Successfully');
       }
       navigate('/', { state: formData });
-    } 
+    }
   };
 
   const handleCancel = () => {
-    const confirmCancel = window.confirm('Are you sure you want to exit?');
+    const confirmCancel = window.confirm('Do you want to exit?');
 
     if (confirmCancel) {
       navigate('/');
     }
   };
+
   return (
     <Container className='addcontainer'>
       <Card className='back shadow'>
-        <div className='back'><h2>Add User</h2></div>
+        <div className='back'>   <h2>{isEditing ? 'Edit User' : 'Add User'}</h2></div>
         <div className='formin'>
           <Form onSubmit={handleSubmit}>
             <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
@@ -131,7 +137,9 @@ const Adduser = () => {
               </Col>
             </Form.Group>
             <div className='buttonalign gap-2'>
-              <Button type="submit"  className='btn-success'>Submit</Button>
+              <Button type="submit" className={isEditing ? 'btn-primary' : 'btn-success'}>
+                {isEditing ? 'Update' : 'Submit'}
+              </Button>
               <Button className='btn-danger' onClick={handleCancel}>Cancel</Button>
             </div>
           </Form>

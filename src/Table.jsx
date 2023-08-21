@@ -9,8 +9,9 @@ import { deleteUserData } from "./Apicall";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import ReactPaginate from 'react-paginate';
+import { InfinitySpin } from 'react-loader-spinner';
 
-const  UserTable = () => {
+const UserTable = () => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -22,8 +23,7 @@ const  UserTable = () => {
   const fetchUserData = async (page) => {
     try {
       const response = await axios.get(
-        `https://fts-backend.onrender.com/admin/testing/getallusers?offset=${page + 1}&limit=${usersPerPage}`
-      );
+        `https://fts-backend.onrender.com/admin/testing/getallusers?page=${page + 1}&size=${usersPerPage}`);
       return response.data;
 
     } catch (error) {
@@ -55,7 +55,7 @@ const  UserTable = () => {
       } catch (error) {
         console.log(error);
       }
-      
+
     }
   };
 
@@ -68,24 +68,25 @@ const  UserTable = () => {
     setSelectedUser(null);
     setShowModal(false);
   };
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data2 = await fetchUserData(pageNumber);
-        setData(data2);
-      } catch (e) {
-        console.log(e);
+        const responseData = await fetchUserData(pageNumber);
+        setData(responseData);
+      } catch (error) {
+        console.log(error);
       }
     };
 
     fetchData();
   }, [pageNumber]);
-
   return (
     <>
       <Container>
+        <div className="nav">heloo</div>
         <div className="text-end">
+
           <Button className="btn btn-danger" onClick={() => navigate("/adduser")} >Add User</Button>
         </div>
         <h3 className="text-white">Fetching the Users</h3>
@@ -103,11 +104,12 @@ const  UserTable = () => {
             </tr>
           </thead>
           <tbody>
-            {data?.response?.paginationOutput?.items?.length > 1 ? (
-              data?.response?.paginationOutput?.items?.map((user, index) => {
+            {data?.response?.paginationOutput?.results?.length > 0 ? (
+              data?.response?.paginationOutput?.results?.map((user, index) => {
+                const currentSNo = index + 1 + pageNumber * usersPerPage;
                 return (
                   <tr key={index}>
-                    <td>{index + 1}</td>
+                    <td>{currentSNo}</td>
                     <td>{user.name}</td>
                     <td>{user.email}</td>
                     <td>{user.phone_number}</td>
@@ -152,7 +154,7 @@ const  UserTable = () => {
             ) : (
               <tr>
                 <td className="text-center " colSpan={8}>
-                  <h3>No Data Found</h3>
+                  {data ? "No data found" : <InfinitySpin width="200" color="#e6470d" />}
                 </td>
               </tr>
             )}
@@ -185,7 +187,7 @@ const  UserTable = () => {
       <ReactPaginate
         previousLabel={"Previous"}
         nextLabel={"Next"}
-        pageCount={Math.ceil(data?.response?.paginationOutput?.totalCount / usersPerPage)}
+        pageCount={data?.response?.paginationOutput?.totalPages || 0}
         onPageChange={handlePageChange}
         containerClassName={"pagination"}
         previousLinkClassName={"pagination__link"}

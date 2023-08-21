@@ -1,37 +1,41 @@
-body{
-    background-image: url("/Assects/bg3.jpg");
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    height: 100vh;
+body {
+  background-image: url("/Assects/bg3.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
 }
+
 .back {
-    text-align: center;
-    margin-top: 20px;
-  }
-  
-  .formin {
-    padding: 20px;
-  }
-  
-  .buttonalign {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
-      .addcontainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  .card {
-    width: 600px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
+  text-align: center;
+  margin-top: 20px;
+}
+
+.formin {
+  padding: 20px;
+}
+
+.buttonalign {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.addcontainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.card {
+  width: 600px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.nav {
+  color: transparent;
+}

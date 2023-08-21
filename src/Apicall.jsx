@@ -1,20 +1,20 @@
 import axios from "axios";
 
 
-export const fetchUserData = async () => {
-  await axios
-    .get(
-      "https://fts-backend.onrender.com/admin/testing/getallusers?offset=1&limit=10"
-    )
-    .then((response) => {
-      console.log(response);
-      return (response)
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+// export const fetchUserData = async () => {
+//   await axios
+//     .get(
+//       "https://fts-backend.onrender.com/admin/testing/getallusers?offset=1&limit=10"
+//     )
+//     .then((response) => {
+//       console.log(response);
+//       return (response)
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
 
-};
+// };
 
 export const addUserData = async (formData) => {
   await axios.post("https://fts-backend.onrender.com/user/newRegistration", formData)
