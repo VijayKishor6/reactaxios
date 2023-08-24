@@ -91,6 +91,7 @@ const Adduser = () => {
   };
 
   return (
+    <div className='background'>
     <Container className='addcontainer'>
       <Card className='back shadow'>
         <div className='back'>   <h2>{isEditing ? 'Edit User' : 'Add User'}</h2></div>
@@ -147,6 +148,7 @@ const Adduser = () => {
       </Card>
 
     </Container>
+    </div>
   );
 }
 

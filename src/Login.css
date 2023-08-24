@@ -1,11 +1,16 @@
+
 .headlogin{
     color:white;
 
 }
 .login-container {
+  background-image: url("/Assects/bg3.jpg");
     display: flex;
     justify-content: center;
     align-items: center;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
     height: 100vh;
   }
   

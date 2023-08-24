@@ -53,3 +53,6 @@ Pagination styles .pagination {
 .pagination__link--active {
   color: #e6470d;
 }
+.tabledashbutton{
+width:100%;
+}
