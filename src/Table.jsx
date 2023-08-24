@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment/moment";
-import { Button, Container, Modal, Table } from "react-bootstrap";
-import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
+import { Button, Container, FormControl, InputGroup, Modal, Table } from "react-bootstrap";
+import { AiFillDelete, AiFillEdit, AiFillEye, AiOutlineFileSearch } from "react-icons/ai";
 import './App.css';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +10,8 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import ReactPaginate from 'react-paginate';
 import { InfinitySpin } from 'react-loader-spinner';
+import Avatar from 'react-avatar';
+import { BiSolidSortAlt } from "react-icons/bi";
 
 const UserTable = () => {
   const navigate = useNavigate();
@@ -40,7 +42,7 @@ const UserTable = () => {
   const handleEditClick = (user) => {
     const confirmEdit = window.confirm("Do you want to edit?");
     if (confirmEdit) {
-      navigate('/adduser', { state: user });
+      navigate(`/editUser/${user.id}`, { state: user });
     }
   };
 
@@ -83,23 +85,43 @@ const UserTable = () => {
   }, [pageNumber]);
   return (
     <>
+    <div className="row">
+      <div className="col-2">
+
+      </div>
+      <div className="col-10">
+        
+      </div>
+    </div>
       <Container>
         <div className="nav">heloo</div>
         <div className="text-end">
-
-          <Button className="btn btn-danger" onClick={() => navigate("/adduser")} >Add User</Button>
+          <Button className="btn btn-danger" onClick={() => navigate("/addUser")} >Add User</Button>
         </div>
         <h3 className="text-white">Fetching the Users</h3>
+        <InputGroup className="mb-3">
+  <InputGroup.Text id="search-addon">
+    <AiOutlineFileSearch />
+  </InputGroup.Text>
+  <FormControl
+    placeholder="Search users by name or email"
+    aria-label="Search users"
+    aria-describedby="search-addon"
+    // value={searchTerm}
+    // onChange={(e) => setSearchTerm(e.target.value)}
+  />
+</InputGroup>
+        
         <Table striped bordered hover className="shadow table-responsive">
           <thead>
             <tr>
-              <th className="text-center">S.No</th>
-              <th className="text-center">Name</th>
-              <th className="text-center">Email</th>
-              <th className="text-center">Phone Number</th>
-              <th className="text-center">Message</th>
-              <th className="text-center">CreatedAt</th>
-              <th className="text-center">UpdatedAt</th>
+              <th className="text-center">S.No &nbsp;<BiSolidSortAlt/></th>
+              <th className="text-center">Name  &nbsp;<BiSolidSortAlt/></th>
+              <th className="text-center">Email  &nbsp;<BiSolidSortAlt/></th>
+              <th className="text-center">Phone Number  &nbsp;<BiSolidSortAlt/></th>
+              <th className="text-center">Message  &nbsp;<BiSolidSortAlt/></th>
+              <th className="text-center">CreatedAt  &nbsp;<BiSolidSortAlt/></th>
+              <th className="text-center">UpdatedAt  &nbsp;<BiSolidSortAlt/></th>
               <th className="text-center">Actions</th>
             </tr>
           </thead>
@@ -109,7 +131,7 @@ const UserTable = () => {
                 const currentSNo = index + 1 + pageNumber * usersPerPage;
                 return (
                   <tr key={index}>
-                    <td>{currentSNo}</td>
+                    <td>{currentSNo} </td>
                     <td>{user.name}</td>
                     <td>{user.email}</td>
                     <td>{user.phone_number}</td>
@@ -117,12 +139,22 @@ const UserTable = () => {
                     <td>{moment(user.createdAt).format("MM/DD/YYYY")}</td>
                     <td>{moment(user.updatedAt).format("MM/DD/YYYY")}</td>
                     <td>
+                    <Button
+                        onClick={() => handleShowClick(user)}
+                        style={{
+                          backgroundColor: "transparent",
+                          borderColor: "transparent",
+                          color: "skyblue",
+                        }}
+                      >
+                        <AiFillEye />
+                      </Button>
                       <Button
                         onClick={() => handleEditClick(user)}
                         style={{
                           backgroundColor: "transparent",
                           borderColor: "transparent",
-                          color: "black",
+                            color: "green",
                         }}
                       >
                         <AiFillEdit />
@@ -132,21 +164,12 @@ const UserTable = () => {
                         style={{
                           backgroundColor: "transparent",
                           borderColor: "transparent",
-                          color: "black",
+                          color: "red",
                         }}
                       >
                         <AiFillDelete />
                       </Button>
-                      <Button
-                        onClick={() => handleShowClick(user)}
-                        style={{
-                          backgroundColor: "transparent",
-                          borderColor: "transparent",
-                          color: "black",
-                        }}
-                      >
-                        <AiFillEye />
-                      </Button>
+                     
                     </td>
                   </tr>
                 );
@@ -154,8 +177,8 @@ const UserTable = () => {
             ) : (
               <tr>
                 <td className="text-center " colSpan={8}>
-                  {data ? "No data found" : <InfinitySpin width="200" color="#e6470d" />}
-                </td>
+                {data ? "No data found" : <InfinitySpin width="200" color="#e6470d" />}
+                         </td>
               </tr>
             )}
           </tbody>
@@ -171,10 +194,18 @@ const UserTable = () => {
         <Modal.Body>
           {selectedUser && (
             <>
-              <p>Name: {selectedUser.name}</p>
-              <p>Email: {selectedUser.email}</p>
-              <p>Phone Number: {selectedUser.phone_number}</p>
-              <p>Message:{selectedUser.message}</p>
+            <div class="row">
+              <div className="col-3 mt-4">
+              <Avatar name={selectedUser.name}  round="100px"/>
+              </div>
+              <div className="col-9 fw-bold">
+              <p >{selectedUser.name}</p>
+              <p>{selectedUser.email}</p>
+              <p>{selectedUser.phone_number}</p>
+              <p>{selectedUser.message}</p>
+              </div>
+            </div>
+              
             </>
           )}
         </Modal.Body>

@@ -78,7 +78,7 @@ const Adduser = () => {
         await addUserData(formData);
         toast('Added Data Successfully');
       }
-      navigate('/', { state: formData });
+      navigate('/userTable', { state: formData });
     }
   };
 
@@ -86,7 +86,7 @@ const Adduser = () => {
     const confirmCancel = window.confirm('Do you want to exit?');
 
     if (confirmCancel) {
-      navigate('/');
+      navigate('/userTable');
     }
   };
 
