@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment/moment";
-import { Button, Container, Modal, Navbar, Table } from "react-bootstrap";
-import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
+import { Button,Modal, Navbar, Table } from "react-bootstrap";
+import { AiFillDelete, AiFillEdit, AiFillEye, AiOutlineLogout, AiOutlineUserAdd } from "react-icons/ai";
 import './App.css';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +12,6 @@ import ReactPaginate from 'react-paginate';
 import { InfinitySpin } from 'react-loader-spinner';
 import Avatar from 'react-avatar';
 import { BiSolidSortAlt } from "react-icons/bi";
-import concert from "./MicrosoftTeams-image.png"
 
 const UserTable = () => {
   const navigate = useNavigate();
@@ -87,37 +86,52 @@ const UserTable = () => {
   return (
     <>
       <div className="conatiner-fluid h-100">
-        <div className="row h-100">
-          <div className="col-2 bg-danger">
+        <Navbar className="navbarbg px-2">
+            <Navbar.Brand href="#home" className="text-white">ConcertIdc</Navbar.Brand>
+            <Navbar.Toggle />
+            <Navbar.Collapse className="justify-content-end">
+              <Navbar.Text className="text-white">
+                Signed in as: <a href="#login" className="text-info">Vijay Kishor</a>
+              </Navbar.Text>
+              <Button
+              onClick={() => navigate("/")}
+                style={{
+                  backgroundColor: "transparent",
+                  borderColor: "transparent",
+                  color: "green",
+                }}
+              >
+                <AiOutlineLogout aria-label="Logout"  style={{width:35,height:35}}/>
+              </Button>
+            </Navbar.Collapse>
+        </Navbar>
+        <div className="row h-100 maincon">
+          {/* <div className="col-1  px-0">
             <div>
-              <img src={concert} alt="logo" style={{ marginLeft: 65, width: 150, height: 150 }} />
+              <img src={concert} alt="logo" style={{ width: 150, height: 150 }} />
             </div>
             <hr />
             <div >
-              <Button className="tabledashbutton" >Dashboard</Button>
+              <Button
+              onClick={() => navigate("/")}
+                style={{
+                  backgroundColor: "transparent",
+                  borderColor: "transparent",
+                  color: "green",
+                }}
+              >
+                <AiOutlineLogout aria-label="Logout"  style={{marginLeft:25,width:50,height:50}}/>
+              </Button>
             </div>
-            <div className="mt-1">
-            <Button className="tabledashbutton" onClick={()=>navigate("/")}>Logout</Button>
+           
+          </div> */}
+          <div className="col-12  m-0 p-0">
 
-            </div>
-          </div>
-          <div className="col-10 bg-info m-0 p-0">
-            <Navbar className="bg-success">
-              <Container>
-                <Navbar.Brand href="#home">ConcertIdc</Navbar.Brand>
-                <Navbar.Toggle />
-                <Navbar.Collapse className="justify-content-end">
-                  <Navbar.Text>
-                    Signed in as: <a href="#login">Vijay Kishor</a>
-                  </Navbar.Text>
-                </Navbar.Collapse>
-              </Container>
-            </Navbar>
             <div className="container mt-4">
               <div className="text-end">
-                <Button className="btn btn-danger" onClick={() => navigate("/addUser")} >Add User</Button>
+                <Button className="btn btn-danger" onClick={() => navigate("/addUser")} ><AiOutlineUserAdd/>Add User</Button>
               </div>
-              <h3 className="text-white">Fetching the Users</h3>
+              <h3 className="text-dark">Fetching the Users</h3>
 
               <Table striped bordered hover className="shadow table-responsive">
                 <thead>
