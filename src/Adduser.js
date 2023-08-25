@@ -12,6 +12,7 @@ const Adduser = () => {
   const location = useLocation();
   const userData = location.state || {};
 
+
   const [formData, setFormData] = useState({
     name: userData.name || '',
     email: userData.email || '',
@@ -92,62 +93,62 @@ const Adduser = () => {
 
   return (
     <div className='background'>
-    <Container className='addcontainer'>
-      <Card className='back shadow'>
-        <div className='back'>   <h2>{isEditing ? 'Edit User' : 'Add User'}</h2></div>
-        <div className='formin'>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-              <Form.Label column sm="2">
-                Name
-              </Form.Label>
-              <Col sm="10">
-                <Form.Control type="text" placeholder="Name" id="name" name="name" value={formData.name} onChange={handleChange} />
-                <Form.Text className="text-danger">{validationErrors.name}</Form.Text>
+      <Container className='addcontainer'>
+        <Card className='back shadow'>
+          <div className='back'>   <h2>{isEditing ? 'Edit User' : 'Add User'}</h2></div>
+          <div className='formin'>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+                <Form.Label column sm="2">
+                  Name
+                </Form.Label>
+                <Col sm="10">
+                  <Form.Control type="text" placeholder="Name" id="name" name="name" value={formData.name} onChange={handleChange} />
+                  <Form.Text className="text-danger">{validationErrors.name}</Form.Text>
 
-              </Col>
-            </Form.Group>
+                </Col>
+              </Form.Group>
 
-            <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-              <Form.Label column sm="2">
-                Email
-              </Form.Label>
-              <Col sm="10">
-                <Form.Control type="text" placeholder="Email" id="email" name="email" value={formData.email} onChange={handleChange} />
-                <Form.Text className="text-danger">{validationErrors.email}</Form.Text>
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-              <Form.Label column sm="2">
-                Conatct
-              </Form.Label>
-              <Col sm="10">
-                <Form.Control type="text" placeholder="Phone Number" id="phone_number" name="phone_number" value={formData.phone_number} onChange={handleChange} />
-                <Form.Text className="text-danger">{validationErrors.phone_number}</Form.Text>
+              <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+                <Form.Label column sm="2">
+                  Email
+                </Form.Label>
+                <Col sm="10">
+                  <Form.Control type="text" placeholder="Email" id="email" name="email" value={formData.email} onChange={handleChange} />
+                  <Form.Text className="text-danger">{validationErrors.email}</Form.Text>
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+                <Form.Label column sm="2">
+                  Conatct
+                </Form.Label>
+                <Col sm="10">
+                  <Form.Control type="text" placeholder="Phone Number" id="phone_number" name="phone_number" value={formData.phone_number} onChange={handleChange} />
+                  <Form.Text className="text-danger">{validationErrors.phone_number}</Form.Text>
 
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-              <Form.Label column sm="2">
-                Message
-              </Form.Label>
-              <Col sm="10">
-                <Form.Control placeholder="Message" as="textarea" rows={3} id="message" name="message" value={formData.message} onChange={handleChange} />
-                <Form.Text className="text-danger">{validationErrors.message}</Form.Text>
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+                <Form.Label column sm="2">
+                  Message
+                </Form.Label>
+                <Col sm="10">
+                  <Form.Control placeholder="Message" as="textarea" rows={3} id="message" name="message" value={formData.message} onChange={handleChange} />
+                  <Form.Text className="text-danger">{validationErrors.message}</Form.Text>
 
-              </Col>
-            </Form.Group>
-            <div className='buttonalign gap-2'>
-              <Button type="submit" className={isEditing ? 'btn-primary' : 'btn-success'}>
-                {isEditing ? 'Update' : 'Submit'}
-              </Button>
-              <Button className='btn-danger' onClick={handleCancel}>Cancel</Button>
-            </div>
-          </Form>
-        </div>
-      </Card>
+                </Col>
+              </Form.Group>
+              <div className='buttonalign gap-2'>
+                <Button type="submit" className={isEditing ? 'btn-primary' : 'btn-success'}>
+                  {isEditing ? 'Update' : 'Submit'}
+                </Button>
+                <Button className='btn-danger' onClick={handleCancel}>Cancel</Button>
+              </div>
+            </Form>
+          </div>
+        </Card>
 
-    </Container>
+      </Container>
     </div>
   );
 }

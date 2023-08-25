@@ -1,9 +1,10 @@
 .background{
-  background-image: url("/Assects/bg3.jpg");
+  /* background-image: url("/Assects/bg3.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  height: 100vh;
+  height: 100vh; */
+  background-color: whitesmoke;
 }
 
 .back {
@@ -22,7 +23,7 @@
 }
 
 .addcontainer {
-  
+
   display: flex;
   justify-content: center;
   align-items: center;
