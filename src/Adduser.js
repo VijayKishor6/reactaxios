@@ -3,8 +3,10 @@ import './Adduser.css';
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { addUserData, editUserData } from './Apicall';
 import { useNavigate } from "react-router-dom"
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import { useLocation } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 const Adduser = () => {
@@ -79,7 +81,10 @@ const Adduser = () => {
         await addUserData(formData);
         toast('Added Data Successfully');
       }
-      navigate('/userTable', { state: formData });
+      setTimeout(() => {          
+        navigate('/userTable', { state: formData });
+      }, 2000);
+    
     }
   };
 
@@ -92,7 +97,12 @@ const Adduser = () => {
   };
 
   return (
+
+    <>      <ToastContainer />
+    
     <div className='background'>
+        
+
       <Container className='addcontainer'>
         <Card className='back shadow'>
           <div className='back'>   <h2>{isEditing ? 'Edit User' : 'Add User'}</h2></div>
@@ -150,6 +160,7 @@ const Adduser = () => {
 
       </Container>
     </div>
+    </>
   );
 }
 
