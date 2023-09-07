@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment/moment";
-import { Button, Modal, Navbar, Table } from "react-bootstrap";
+import { Button, Form, Modal, Navbar, Table } from "react-bootstrap";
 import { AiFillDelete, AiFillEdit, AiFillEye, AiOutlineLogout, AiOutlineUserAdd } from "react-icons/ai";
 import './App.css';
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { deleteUserData } from "./Apicall";
 import { ToastContainer, toast } from "react-toastify";
@@ -14,22 +13,28 @@ import Avatar from 'react-avatar';
 import { BiSolidSortAlt } from "react-icons/bi";
 import concert from "./MicrosoftTeams-image.png"
 import profilepic from "./man_4140048.png"
+import api from "./Interceptor";
 
 const UserTable = () => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [data, setData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const [pageNumber, setPageNumber] = useState(0);
   const usersPerPage = 5;
+  const pageStart = pageNumber * usersPerPage + 1;
+  const count = Math.min((pageNumber + 1) * usersPerPage, data?.response?.paginationOutput?.totalResults);
+  const totalCount = data?.response?.paginationOutput?.totalResults || 0;
+
 
 
   console.log(data);
 
   const fetchUserData = async (page) => {
     try {
-      const response = await axios.get(
-        `https://fts-backend.onrender.com/admin/testing/getallusers?page=${page + 1}&size=${usersPerPage}`);
+      const response = await api.get(
+        `/admin/testing/getallusers?page=${page + 1}&size=${usersPerPage}&search=${searchQuery}`);
       return response.data;
 
     } catch (error) {
@@ -86,7 +91,10 @@ const UserTable = () => {
     };
 
     fetchData();
-  }, [pageNumber]);
+  }, [pageNumber, searchQuery]);
+
+
+
   return (
     <>
       <div className="conatiner-fluid h-100">
@@ -137,7 +145,18 @@ const UserTable = () => {
                   <Button className="btn btn-danger" onClick={() => navigate("/addUser")} ><AiOutlineUserAdd />Add User</Button>
                 </div>
                 <h3 className="text-dark">Fetching the Users</h3>
-
+                <div className="text-end mb-3">
+                  <Form.Control
+                    type="text"
+                    placeholder="Search"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    style={{
+                      width: "300px",
+                      display: "inline-block",
+                    }}
+                  />
+                </div>
                 <Table striped bordered hover className="shadow table-responsive">
                   <thead>
                     <tr>
@@ -237,11 +256,14 @@ const UserTable = () => {
                     </Button>
                   </Modal.Footer>
                 </Modal>
+                <p>
+                  Showing {pageStart} to {count} of {totalCount} entries
+                </p>
                 <ReactPaginate
                   previousLabel={"Previous"}
                   nextLabel={"Next"}
                   pageCount={data?.response?.paginationOutput?.totalPages || 0}
-                  onPageChange={handlePageChange}               
+                  onPageChange={handlePageChange}
                   pageLinkClassName="page-link"
                   previousClassName="page-item"
                   previousLinkClassName="page-link"

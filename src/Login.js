@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import './Login.css';
 import { useNavigate } from "react-router-dom";
 import { Button } from 'react-bootstrap';
-import axios from 'axios';
 import {ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import api from './Interceptor';
 
 
 const Login = ({setIsSignedIn}) => {
@@ -21,7 +21,7 @@ const Login = ({setIsSignedIn}) => {
     setIsLoading(true); 
 
     try {
-      const log = await axios.post("https://fts-backend.onrender.com/admin/login", {
+      const log = await api.post("/admin/login", {
         email: userName,
         password: password,
       });

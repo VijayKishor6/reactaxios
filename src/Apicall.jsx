@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "./Interceptor";
 
 
 // export const fetchUserData = async () => {
@@ -17,7 +17,7 @@ import axios from "axios";
 // };
 
 export const addUserData = async (formData) => {
-  await axios.post("https://fts-backend.onrender.com/user/newRegistration", formData)
+  await api.post("/user/newRegistration", formData)
     .then((response) => {
       console.log(response);
 
@@ -28,12 +28,12 @@ export const addUserData = async (formData) => {
 };
 
 export const deleteUserData = async (id) => {
-  await axios.delete(`https://fts-backend.onrender.com/admin/testing/deleteUserById?id=${id}`)
+  await api.delete(`/admin/testing/deleteUserById?id=${id}`)
   return "success";
 }
 
 export const editUserData = async (id, formData) => {
-  await axios.put(`https://fts-backend.onrender.com/admin/testing/editUserById?id=${id}`, formData)
+  await api.put(`/admin/testing/editUserById?id=${id}`, formData)
   return "success";
 }
 
