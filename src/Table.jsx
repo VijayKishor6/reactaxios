@@ -91,6 +91,7 @@ const UserTable = () => {
     };
 
     fetchData();
+    // eslint-disable-next-line 
   }, [pageNumber, searchQuery]);
 
 
@@ -120,7 +121,7 @@ const UserTable = () => {
           </Navbar.Collapse>
         </Navbar>
         <div className="row  h-100 maincon">
-          <div className="col-2 px-3 py-2">
+          <div className="col-lg-2 col-12 px-3 py-2">
             <div className="card vh-100 w-100">
               <div>
                 <img src={profilepic} alt="logo" className="profilepic" />
@@ -135,7 +136,7 @@ const UserTable = () => {
             </div>
 
           </div>
-          <div className="col-10  px-3 py-2">
+          <div className="col-lg-10 col-12  px-3 py-2">
             <div className="card w-100">
 
 
