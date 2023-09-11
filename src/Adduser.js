@@ -70,21 +70,29 @@ const Adduser = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+  
     if (validateForm()) {
-      if (isEditing) {
-        await editUserData(userData.id, formData);
-        toast('Updated Data Successfully');
-      } else {
-        await addUserData(formData);
-        toast('Added Data Successfully');
+      try {
+        if (isEditing) {
+          await editUserData(userData.id, formData);
+          toast('Updated Data Successfully');
+        } else {
+          await addUserData(formData);
+          toast('Added Data Successfully');
+        }
+        setTimeout(() => {          
+          navigate('/userTable', { state: formData });
+        }, 2000);
+      } catch (error) {
+        if (error.response && error.response.status === 400) {
+          toast.error('Error: Bad Request (400)');
+        } else {
+          toast.error('An error occurred');
+        }
       }
-      setTimeout(() => {          
-        navigate('/userTable', { state: formData });
-      }, 2000);
-    
     }
   };
+  
 
   const handleCancel = () => {
     const confirmCancel = window.confirm('Do you want to exit?');

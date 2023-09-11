@@ -7,8 +7,6 @@ import Private from './Private';
 import { useEffect } from 'react';
 import { useState } from 'react';
 
-
-
 function App() {
   const access = localStorage.getItem("accesstoken");
   // const location = window.location.pathname
