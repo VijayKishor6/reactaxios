@@ -27,10 +27,6 @@ const UserTable = () => {
   const count = Math.min((pageNumber + 1) * usersPerPage, data?.response?.paginationOutput?.totalResults);
   const totalCount = data?.response?.paginationOutput?.totalResults || 0;
 
-
-
-  console.log(data);
-
   const fetchUserData = async (page) => {
     try {
       const response = await api.get(

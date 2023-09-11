@@ -7,8 +7,6 @@ import { toast, ToastContainer } from 'react-toastify';
 import { useLocation } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 
-
-
 const Adduser = () => {
   const navigate = useNavigate();
   const location = useLocation();

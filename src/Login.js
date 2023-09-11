@@ -38,7 +38,6 @@ const Login = ({setIsSignedIn}) => {
     } catch (error) {
       setIsLoading(false);
       if (error.response && error.response.status === 400) {
-        console.log(error, "hlo");
         toast("Check the Email and Password");
 
       } else {

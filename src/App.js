@@ -12,7 +12,6 @@ import { useState } from 'react';
 function App() {
   const access = localStorage.getItem("accesstoken");
   const location = window.location.pathname
-  console.log(location, "token");
   const [isSignedIn, setIsSignedIn] = useState(access !==null);
   useEffect(() => {
    localStorage.removeItem("accesstoken");
