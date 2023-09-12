@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './Adduser.css';
+import '../css/index.css';
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { addUserData, editUserData } from './Apicall';
 import { useNavigate } from "react-router-dom"

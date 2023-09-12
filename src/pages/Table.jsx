@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import moment from "moment/moment";
 import { Button, Form, Modal, Navbar, Table } from "react-bootstrap";
 import { AiFillDelete, AiFillEdit, AiFillEye, AiOutlineLogout, AiOutlineUserAdd } from "react-icons/ai";
-import './App.css';
+import '../css/index.css';
 import { useNavigate } from "react-router-dom";
 import { deleteUserData } from "./Apicall";
 import { ToastContainer, toast } from "react-toastify";
@@ -11,8 +11,8 @@ import ReactPaginate from 'react-paginate';
 import { InfinitySpin } from 'react-loader-spinner';
 import Avatar from 'react-avatar';
 import { BiSolidSortAlt } from "react-icons/bi";
-import concert from "./MicrosoftTeams-image.png"
-import profilepic from "./man_4140048.png"
+import concert from "../assets/MicrosoftTeams-image.png"
+import profilepic from "../assets/man_4140048.png"
 import api from "./Interceptor";
 
 const UserTable = () => {

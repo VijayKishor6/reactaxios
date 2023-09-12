@@ -1,11 +1,11 @@
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
-import UserTable from './Table';
+import UserTable from './pages/Table';
 import "bootstrap/dist/css/bootstrap.css";
-import Adduser from './Adduser';
-import Login from './Login';
-import Private from './Private';
+import Adduser from './pages/Adduser';
+import Private from './pages/Private';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import Login from './pages/Login';
 
 function App() {
   const access = localStorage.getItem("accesstoken");

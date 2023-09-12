@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Login.css';
+import '../css/index.css';
 import { useNavigate } from "react-router-dom";
 import { Button } from 'react-bootstrap';
 import {ToastContainer, toast } from 'react-toastify';
