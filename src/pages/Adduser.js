@@ -1,98 +1,57 @@
-import { useState } from 'react';
-import '../Css/index.css';
-import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
+import { Card, Container } from "react-bootstrap";
 import { addUserData, editUserData } from '../Actions/Apicall';
 import { useNavigate } from "react-router-dom"
 import { toast, ToastContainer } from 'react-toastify';
 import { useLocation } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+
+const validationSchema = Yup.object().shape({
+  name: Yup.string()
+    .matches(/^[a-zA-Z\s]*$/, 'Name should contain only text characters')
+    .required('Name is required'),
+  email: Yup.string()
+    .email('Invalid email format')
+    .required('Email is required'),
+  phone_number: Yup.string()
+    .matches(/^\d+$/, 'Phone number should contain only digits')
+    .length(10, 'Phone number should be 10 digits')
+    .required('Phone number is required'),
+  message: Yup.string()
+    .matches(/^[a-zA-Z\s]*$/, 'Message should contain only text characters')
+    .required('Message is required'),
+});
 
 const Adduser = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const userData = location.state || {};
 
-
-  const [formData, setFormData] = useState({
-    name: userData.name || '',
-    email: userData.email || '',
-    phone_number: userData.phone_number || '',
-    message: userData.message || '',
-  });
-
   const isEditing = userData.id !== undefined;
 
-
-  const [validationErrors, setValidationErrors] = useState({
-    name: '',
-    email: '',
-    phone_number: '',
-    message: '',
-  });
-
-  const validateForm = () => {
-    let isValid = true;
-    const errors = {
-      name: '',
-      email: '',
-      phone_number: '',
-      message: '',
-    };
-
-    if (!formData.name.match(/^[a-zA-Z\s]*$/)) {
-      isValid = false;
-      errors.name = 'Name should contain only text characters';
-    }
-
-    if (!formData.email.match(/\S+@\S+\.\S+/)) {
-      isValid = false;
-      errors.email = 'Invalid email format';
-    }
-
-    if (formData.phone_number.length !== 10 || !formData.phone_number.match(/^\d+$/)) {
-      isValid = false;
-      errors.phone_number = 'Phone number should be 10 digits';
-    }
-
-    if (!formData.message.match(/^[a-zA-Z\s]*$/)) {
-      isValid = false;
-      errors.message = 'Message should contain only text characters';
-    }
-
-    setValidationErrors(errors);
-    return isValid;
-  };
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-  
-    if (validateForm()) {
-      try {
-        if (isEditing) {
-          await editUserData(userData.id, formData);
-          toast('Updated Data Successfully');
-        } else {
-          await addUserData(formData);
-          toast('Added Data Successfully');
-        }
-        setTimeout(() => {          
-          navigate('/userTable', { state: formData });
-        }, 2000);
-      } catch (error) {
-        if (error.response && error.response.status === 400) {
-          toast.error('Error: Bad Request (400)');
-        } else {
-          toast.error('An error occurred');
-        }
+  const handleSubmit = async (values, { setSubmitting }) => {
+    try {
+      if (isEditing) {
+        await editUserData(userData.id, values);
+        toast('Updated Data Successfully');
+      } else {
+        await addUserData(values);
+        toast('Added Data Successfully');
       }
+      setTimeout(() => {
+        navigate('/userTable', { state: values });
+      }, 2000);
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        toast.error('Error: Bad Request (400)');
+      } else {
+        toast.error('An error occurred');
+      }
+    } finally {
+      setSubmitting(false);
     }
   };
-  
 
   const handleCancel = () => {
     const confirmCancel = window.confirm('Do you want to exit?');
@@ -103,72 +62,97 @@ const Adduser = () => {
   };
 
   return (
-
-    <>      <ToastContainer />
-    
-    <div className='background'>
-        
-
-      <Container className='addcontainer'>
-        <Card className='back shadow'>
-          <div className='back'>   <h2>{isEditing ? 'Edit User' : 'Add User'}</h2></div>
-          <div className='formin'>
-            <Form onSubmit={handleSubmit}>
-              <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-                <Form.Label column sm="2">
-                  Name
-                </Form.Label>
-                <Col sm="10">
-                  <Form.Control type="text" placeholder="Name" id="name" name="name" value={formData.name} onChange={handleChange} />
-                  <Form.Text className="text-danger">{validationErrors.name}</Form.Text>
-
-                </Col>
-              </Form.Group>
-
-              <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-                <Form.Label column sm="2">
-                  Email
-                </Form.Label>
-                <Col sm="10">
-                  <Form.Control type="text" placeholder="Email" id="email" name="email" value={formData.email} onChange={handleChange} />
-                  <Form.Text className="text-danger">{validationErrors.email}</Form.Text>
-                </Col>
-              </Form.Group>
-              <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-                <Form.Label column sm="2">
-                  Conatct
-                </Form.Label>
-                <Col sm="10">
-                  <Form.Control type="text" placeholder="Phone Number" id="phone_number" name="phone_number" value={formData.phone_number} onChange={handleChange} />
-                  <Form.Text className="text-danger">{validationErrors.phone_number}</Form.Text>
-
-                </Col>
-              </Form.Group>
-              <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-                <Form.Label column sm="2">
-                  Message
-                </Form.Label>
-                <Col sm="10">
-                  <Form.Control placeholder="Message" as="textarea" rows={3} id="message" name="message" value={formData.message} onChange={handleChange} />
-                  <Form.Text className="text-danger">{validationErrors.message}</Form.Text>
-
-                </Col>
-              </Form.Group>
-              <div className='buttonalign gap-2'>
-                <Button type="submit" className={isEditing ? 'btn-primary' : 'btn-success'}>
-                  {isEditing ? 'Update' : 'Submit'}
-                </Button>
-                <Button className='btn-danger' onClick={handleCancel}>Cancel</Button>
+    <>
+      <ToastContainer />
+      <div className='background'>
+        <Container className='addcontainer'>
+          <Card className='back shadow'>
+            <div className='back'>
+              <h2>{isEditing ? 'Edit User' : 'Add User'}</h2>
+            </div>
+            <div className='formin'>
+              <Formik
+                initialValues={{
+                  name: userData.name || '',
+                  email: userData.email || '',
+                  phone_number: userData.phone_number || '',
+                  message: userData.message || '',
+                }}
+                validationSchema={validationSchema}
+                onSubmit={handleSubmit}
+              >
+                {({ isSubmitting }) => (
+            <Form>
+            <div className="form-group">
+              <label htmlFor="name" className="label-left">Name</label>
+              <div className="form-control-container">
+                <Field type="text" id="name" name="name" className="form-control" />
+                <ErrorMessage name="name" component="div" className="text-danger error-message" />
               </div>
-            </Form>
-          </div>
-        </Card>
-
-      </Container>
-    </div>
+            </div>
+          
+            <div className="form-group">
+              <label htmlFor="email" className="label-left">Email</label>
+              <div className="form-control-container">
+                <Field type="text" id="email" name="email" className="form-control" />
+                <ErrorMessage name="email" component="div" className="text-danger error-message" />
+              </div>
+            </div>
+          
+            <div className="form-group">
+              <label htmlFor="phone_number" className="label-left">Phone Number</label>
+              <div className="form-control-container">
+                <Field
+                  type="text"
+                  id="phone_number"
+                  name="phone_number"
+                  className="form-control"
+                />
+                <ErrorMessage name="phone_number" component="div" className="text-danger error-message" />
+              </div>
+            </div>
+          
+            <div className="form-group">
+              <label htmlFor="message" className="label-left">Message</label>
+              <div className="form-control-container">
+                <Field
+                  as="textarea"
+                  id="message"
+                  name="message"
+                  className="form-control"
+                />
+                <ErrorMessage name="message" component="div" className="text-danger error-message" />
+              </div>
+            </div>
+          
+            {/* Buttons */}
+            <div className="buttonalign gap-2">
+              <button
+                type="submit"
+                className={isEditing ? 'btn btn-primary' : 'btn btn-success'}
+                disabled={isSubmitting}
+              >
+                {isEditing ? 'Update' : 'Submit'}
+              </button>
+              <button
+                className="btn btn-danger"
+                type="button"
+                onClick={handleCancel}
+                disabled={isSubmitting}
+              >
+                Cancel
+              </button>
+            </div>
+          </Form>
+          
+                )}
+              </Formik>
+            </div>
+          </Card>
+        </Container>
+      </div>
     </>
   );
 }
 
 export default Adduser;
-

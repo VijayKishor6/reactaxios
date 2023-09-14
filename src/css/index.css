@@ -226,3 +226,20 @@ Pagination styles .pagination {
   0% { transform: translate(-50%, -50%) rotate(0deg); }
   100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
+
+.label-left {
+  display: inline-block;
+  width: 150px; /* Adjust the width as needed */
+  text-align: left;
+  margin-right: 10px;
+}
+
+.form-control-container {
+  display: inline-block;
+  width: calc(100% - 160px); /* Adjust the width to account for the label width and margin */
+}
+
+.error-message {
+  text-align: left;
+  color: red;
+}
