@@ -2,18 +2,18 @@ import React, { useEffect, useState } from "react";
 import moment from "moment/moment";
 import { Button, Form, Modal, Navbar, Table } from "react-bootstrap";
 import { AiFillDelete, AiFillEdit, AiFillEye, AiOutlineLogout, AiOutlineUserAdd } from "react-icons/ai";
-import '../css/index.css';
+import '../Css/index.css';
 import { useNavigate } from "react-router-dom";
-import { deleteUserData } from "./Apicall";
+import { deleteUserData } from "../Actions/Apicall";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import ReactPaginate from 'react-paginate';
 import { InfinitySpin } from 'react-loader-spinner';
 import Avatar from 'react-avatar';
 import { BiSolidSortAlt } from "react-icons/bi";
-import concert from "../assets/MicrosoftTeams-image.png"
-import profilepic from "../assets/man_4140048.png"
-import api from "./Interceptor";
+import concert from "../Assets/MicrosoftTeams-image.png"
+import profilepic from "../Assets/man_4140048.png"
+import api from "../Global/Interceptor";
 
 const UserTable = () => {
   const navigate = useNavigate();

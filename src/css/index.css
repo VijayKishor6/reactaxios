@@ -22,7 +22,7 @@ code {
 
 }
 .login-container {
-background-image: url("/src/assets/bg3.jpg");
+background-image: url("/src/Assets/bg3.jpg");
   display: flex;
   justify-content: center;
   align-items: center;
@@ -81,7 +81,7 @@ a:hover {
 /* ---------------------------------------------------- */
 
 .background{
-  background-image: url("/src/assets/bg3.jpg");
+  background-image: url("/src/Assets/bg3.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;

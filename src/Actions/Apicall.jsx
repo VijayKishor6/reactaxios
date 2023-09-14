@@ -1,4 +1,4 @@
-import api from "./Interceptor";
+import api from "../Global/Interceptor";
 
 export const addUserData = async (formData) => {
   await api.post("/user/newRegistration", formData)

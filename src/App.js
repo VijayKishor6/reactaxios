@@ -1,15 +1,14 @@
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
-import UserTable from './pages/Table';
+import UserTable from './Pages/Table';
 import "bootstrap/dist/css/bootstrap.css";
-import Adduser from './pages/Adduser';
-import Private from './pages/Private';
+import Adduser from './Pages/Adduser';
+import Private from './Utilis/Private';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import Login from './pages/Login';
+import Login from './Auth/Login';
 
 function App() {
   const access = localStorage.getItem("accesstoken");
-  // const location = window.location.pathname
   const [isSignedIn, setIsSignedIn] = useState(access !==null);
   useEffect(() => {
    localStorage.removeItem("accesstoken");

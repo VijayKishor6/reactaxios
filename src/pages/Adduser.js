@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import '../css/index.css';
+import '../Css/index.css';
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
-import { addUserData, editUserData } from './Apicall';
+import { addUserData, editUserData } from '../Actions/Apicall';
 import { useNavigate } from "react-router-dom"
 import { toast, ToastContainer } from 'react-toastify';
 import { useLocation } from 'react-router-dom';

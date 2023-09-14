@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import '../css/index.css';
+import '../Css/index.css';
 import { useNavigate } from "react-router-dom";
 import { Button } from 'react-bootstrap';
 import {ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import api from './Interceptor';
+import api from '../Global/Interceptor';
 
 
 // ... (other imports and component setup)
