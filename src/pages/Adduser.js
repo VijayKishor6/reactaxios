@@ -82,69 +82,69 @@ const Adduser = () => {
                 onSubmit={handleSubmit}
               >
                 {({ isSubmitting }) => (
-            <Form>
-            <div className="form-group">
-              <label htmlFor="name" className="label-left">Name</label>
-              <div className="form-control-container">
-                <Field type="text" id="name" name="name" className="form-control" />
-                <ErrorMessage name="name" component="div" className="text-danger error-message" />
-              </div>
-            </div>
-          
-            <div className="form-group">
-              <label htmlFor="email" className="label-left">Email</label>
-              <div className="form-control-container">
-                <Field type="text" id="email" name="email" className="form-control" />
-                <ErrorMessage name="email" component="div" className="text-danger error-message" />
-              </div>
-            </div>
-          
-            <div className="form-group">
-              <label htmlFor="phone_number" className="label-left">Phone Number</label>
-              <div className="form-control-container">
-                <Field
-                  type="text"
-                  id="phone_number"
-                  name="phone_number"
-                  className="form-control"
-                />
-                <ErrorMessage name="phone_number" component="div" className="text-danger error-message" />
-              </div>
-            </div>
-          
-            <div className="form-group">
-              <label htmlFor="message" className="label-left">Message</label>
-              <div className="form-control-container">
-                <Field
-                  as="textarea"
-                  id="message"
-                  name="message"
-                  className="form-control"
-                />
-                <ErrorMessage name="message" component="div" className="text-danger error-message" />
-              </div>
-            </div>
-          
-            {/* Buttons */}
-            <div className="buttonalign gap-2">
-              <button
-                type="submit"
-                className={isEditing ? 'btn btn-primary' : 'btn btn-success'}
-                disabled={isSubmitting}
-              >
-                {isEditing ? 'Update' : 'Submit'}
-              </button>
-              <button
-                className="btn btn-danger"
-                type="button"
-                onClick={handleCancel}
-                disabled={isSubmitting}
-              >
-                Cancel
-              </button>
-            </div>
-          </Form>
-          
+                  <Form>
+                    <div className="form-group">
+                      <label htmlFor="name" className="label-left">Name</label>
+                      <div className="form-control-container">
+                        <Field type="text" id="name" name="name" className="form-control" />
+                        <ErrorMessage name="name" component="div" className="text-danger error-message" />
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label htmlFor="email" className="label-left">Email</label>
+                      <div className="form-control-container">
+                        <Field type="text" id="email" name="email" className="form-control" />
+                        <ErrorMessage name="email" component="div" className="text-danger error-message" />
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label htmlFor="phone_number" className="label-left">Phone Number</label>
+                      <div className="form-control-container">
+                        <Field
+                          type="text"
+                          id="phone_number"
+                          name="phone_number"
+                          className="form-control"
+                        />
+                        <ErrorMessage name="phone_number" component="div" className="text-danger error-message" />
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label htmlFor="message" className="label-left">Message</label>
+                      <div className="form-control-container">
+                        <Field
+                          as="textarea"
+                          id="message"
+                          name="message"
+                          className="form-control"
+                        />
+                        <ErrorMessage name="message" component="div" className="text-danger error-message" />
+                      </div>
+                    </div>
+
+                    {/* Buttons */}
+                    <div className="buttonalign gap-2">
+                      <button
+                        type="submit"
+                        className={isEditing ? 'btn btn-primary' : 'btn btn-success'}
+                        disabled={isSubmitting}
+                      >
+                        {isEditing ? 'Update' : 'Submit'}
+                      </button>
+                      <button
+                        className="btn btn-danger"
+                        type="button"
+                        onClick={handleCancel}
+                        disabled={isSubmitting}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </Form>
+
                 )}
               </Formik>
             </div>

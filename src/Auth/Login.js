@@ -1,33 +1,31 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 import '../Css/index.css';
 import { useNavigate } from "react-router-dom";
 import { Button } from 'react-bootstrap';
-import {ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import api from '../Global/Interceptor';
-
-
-// ... (other imports and component setup)
 
 const Login = ({ setIsSignedIn }) => {
   const navigate = useNavigate();
 
-  const [userName, setUserName] = useState('');
-  const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const initialValues = {
+    userName: '',
+    password: '',
+  };
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    if (isLoading) {
-      return; // Do nothing if the button is already disabled
-    }
+  const validationSchema = Yup.object().shape({
+    userName: Yup.string().required('Username is required'),
+    password: Yup.string().required('Password is required'),
+  });
 
-    setIsLoading(true);
-
+  const handleSubmit = async (values, { setSubmitting }) => {
     try {
       const log = await api.post("/admin/login", {
-        email: userName,
-        password: password,
+        email: values.userName,
+        password: values.password,
       });
 
       if (log.status === 200) {
@@ -35,12 +33,12 @@ const Login = ({ setIsSignedIn }) => {
         setIsSignedIn(true);
         toast("Logged in successfully");
         setTimeout(() => {          
-          setIsLoading(false);
+          setSubmitting(false);
           navigate("/userTable");
         }, 2000);
       }
     } catch (error) {
-      setIsLoading(false);
+      setSubmitting(false);
       if (error.response && error.response.status === 400) {
         toast("Check the Email and Password");
       } else {
@@ -55,28 +53,38 @@ const Login = ({ setIsSignedIn }) => {
       <div className="login-container">
         <div className="login-form">
           <h2 className='text-center headlogin'>Login</h2>
-          <form>
-            <div className="form-group headlogin">
-              <label htmlFor="username">Username</label>
-              <input type="text" placeholder='Username' id="username" name="username" value={userName} onChange={(e) => setUserName(e.target.value)} />
-            </div>
-            <div className="form-group headlogin">
-              <label htmlFor="password">Password</label>
-              <input type="password" placeholder='Password' id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-            </div>
-            <p className='headlogin'><a href="!#">Forget Password!</a></p>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}
+          >
+            {({ isSubmitting }) => (
+              <Form>
+                <div className="form-group headlogin">
+                  <label htmlFor="userName">Username</label>
+                  <Field type="text" id="userName" name="userName" placeholder='Username' />
+                  <ErrorMessage name="userName" component="div" className="error" />
+                </div>
+                <div className="form-group headlogin">
+                  <label htmlFor="password">Password</label>
+                  <Field type="password" id="password" name="password" placeholder='Password' />
+                  <ErrorMessage name="password" component="div" className="error" />
+                </div>
+                <p className='headlogin'><a href="!#">Forget Password!</a></p>
 
-            <div className="form-group text-center">
-              <Button type="submit" onClick={handleLogin} disabled={isLoading}>
-                {isLoading ? 'Logging In...' : 'Login'}
-              </Button>
-            </div>
-            {isLoading && <div className="loader"></div>}
-          </form>
+                <div className="form-group text-center">
+                  <Button type="submit" disabled={isSubmitting}>
+                    {isSubmitting ? 'Logging In...' : 'Login'}
+                  </Button>
+                </div>
+                {isSubmitting && <div className="loader"></div>}
+              </Form>
+            )}
+          </Formik>
         </div>
       </div>
     </>
   );
-}
+};
 
 export default Login;
