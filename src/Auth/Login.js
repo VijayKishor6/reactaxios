@@ -17,8 +17,9 @@ const Login = ({ setIsSignedIn }) => {
   };
 
   const validationSchema = Yup.object().shape({
-    userName: Yup.string().required('Username is required'),
-    password: Yup.string().required('Password is required'),
+    userName: Yup.string().required('Username is required').matches(/^[a-zA-Z0-9]+@+[a-zA-Z0-9]+.+[A-z]/,'Enter vaild mail id'),
+    password: Yup.string().required('Password is required').matches( /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9])\S*$/,
+    'Password must contain at least one letter, one number, and one special character'),
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
