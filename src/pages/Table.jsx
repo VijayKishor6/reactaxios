@@ -14,25 +14,30 @@ import { BiSolidSortAlt } from "react-icons/bi";
 import concert from "../Assets/MicrosoftTeams-image.png"
 import profilepic from "../Assets/man_4140048.png"
 import api from "../Global/Interceptor";
+import { Constants } from "../Constants/Constant";
+import { useDispatch, useSelector } from "react-redux";
 
 const UserTable = () => {
+  const dispatch=useDispatch();
+
   const navigate = useNavigate();
+  const selectedData = useSelector((state) => state?.userListData?.userList?.data);
   const [showModal, setShowModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
-  const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [pageNumber, setPageNumber] = useState(0);
   const usersPerPage = 5;
   const pageStart = pageNumber * usersPerPage + 1;
-  const count = Math.min((pageNumber + 1) * usersPerPage, data?.response?.paginationOutput?.totalResults);
-  const totalCount = data?.response?.paginationOutput?.totalResults || 0;
-
+  const count = Math.min((pageNumber + 1) * usersPerPage, selectedData?.response?.paginationOutput?.totalResults);
+  const totalCount = selectedData?.response?.paginationOutput?.totalResults || 0;
   const fetchUserData = async (page) => {
     try {
       const response = await api.get(
         `/admin/testing/getallusers?page=${page + 1}&size=${usersPerPage}&search=${searchQuery}`);
-      return response.data;
-
+        dispatch({
+          type: Constants.FETCH_USERLIST,
+          payload: response,
+        });
     } catch (error) {
       console.log(error);
       throw error;
@@ -57,8 +62,8 @@ const UserTable = () => {
       try {
         await deleteUserData(id);
         toast("Thanks For deleting");
-        const updatedData = await fetchUserData();
-        setData(updatedData);
+         await fetchUserData();
+        // setData(updatedData);
       } catch (error) {
         console.log(error);
       }
@@ -79,8 +84,8 @@ const UserTable = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const responseData = await fetchUserData(pageNumber);
-        setData(responseData);
+         await fetchUserData(pageNumber);
+        // setData(responseData);
       } catch (error) {
         console.log(error);
       }
@@ -168,8 +173,8 @@ const UserTable = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {data?.response?.paginationOutput?.results?.length > 0 ? (
-                      data?.response?.paginationOutput?.results?.map((user, index) => {
+                    {selectedData?.response?.paginationOutput?.results?.length > 0 ? (
+                      selectedData?.response?.paginationOutput?.results?.map((user, index) => {
                         const currentSNo = index + 1 + pageNumber * usersPerPage;
                         return (
                           <tr key={index}>
@@ -219,7 +224,7 @@ const UserTable = () => {
                     ) : (
                       <tr>
                         <td className="text-center " colSpan={8}>
-                          {data ? "No data found" : <InfinitySpin width="200" color="#e6470d" />}
+                          {selectedData ? "No data found" : <InfinitySpin width="200" color="#e6470d" />}
                         </td>
                       </tr>
                     )}
@@ -259,7 +264,7 @@ const UserTable = () => {
                 <ReactPaginate
                   previousLabel={"Previous"}
                   nextLabel={"Next"}
-                  pageCount={data?.response?.paginationOutput?.totalPages || 0}
+                  pageCount={selectedData?.response?.paginationOutput?.totalPages || 0}
                   onPageChange={handlePageChange}
                   pageLinkClassName="page-link"
                   previousClassName="page-item"
